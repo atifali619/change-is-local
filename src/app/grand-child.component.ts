@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, signal} from "@angular/core";
 import {ColorsService} from "./colors.service";
 import {ChangeDetection} from "@angular/cli/lib/config/workspace-schema";
+import {CounterService} from "./counter.service";
 
 @Component({
   standalone: true,
@@ -17,14 +18,15 @@ import {ChangeDetection} from "@angular/cli/lib/config/workspace-schema";
 })
 export class GrandChildComponent {
   private colorsService = inject(ColorsService);
+  private counterService = inject(CounterService);
 
-  counter = signal(0);
+  counter = this.counterService.counter;
 
   changeBackground(){
     return  this.colorsService.getRandomColor();
   }
 
   increment(){
-    this.counter.update(v => v + 1);
+    this.counterService.increment();
   }
 }
